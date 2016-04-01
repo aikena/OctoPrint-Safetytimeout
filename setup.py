@@ -21,7 +21,7 @@ plugin_version = "1.0"
 plugin_description = """After a specified amount of time, it will turn off the temperature to the hotend and bed"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Kristian Toole"
+plugin_author = "Kristian Toole, Ashley Aiken, Dawn Manning, Denzell Barnett"
 
 # The plugin's author's mail address.
 plugin_author_email = "kristiantoole20@gmail.com"
