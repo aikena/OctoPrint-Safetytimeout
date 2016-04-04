@@ -8,7 +8,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.SettingsPlugin):
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-
+	print("hello") 
     def get_settings_defaults(self):
 	return dict(Time="0")
 
