@@ -10,7 +10,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
 
     def get_settings_defaults(self):
-        return dict(Time="https://en.wikipedia.org/wiki/Hello_world")
+	return dict(Time="0")
 
     def get_template_configs(self):
         return [
