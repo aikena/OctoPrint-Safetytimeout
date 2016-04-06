@@ -1,4 +1,4 @@
-# coding=utf-8
+# coding=utf-8 (test git)
 from __future__ import absolute_import
 
 import octoprint.plugin 
@@ -9,7 +9,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-
+	print("hello") 
     def get_settings_defaults(self):
 	return dict(Time="0")
 
