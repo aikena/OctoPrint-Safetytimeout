@@ -1,15 +1,39 @@
 # coding=utf-8 (test git)
+
 from __future__ import absolute_import
-
+import time 
 import octoprint.plugin 
-
+import sys
 class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.TemplatePlugin,
 			  octoprint.plugin.SettingsPlugin):
 
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-	print("hello") 
+        run =int(raw_input("Time:  "))
+        mins = int(run)
+        seconds = 0
+        # Loop until we reach time running
+        while mins != 0:
+        # print "Minutes", mins
+            while seconds != 0:
+                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+                time.sleep(1)
+		sys.stdout.flush()
+                seconds -= 1
+        #De-increment minutes 
+        sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
+        sys.stdout.flush()
+        mins -= 1
+        seconds =59 
+        while seconds != 0:
+            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+            sys.stdout.flush()
+            time.sleep(1)
+            seconds -= 1
+        print("Will check to see if printer is printing")
+
+ 
     def get_settings_defaults(self):
 	return dict(Time="0")
 
@@ -18,6 +42,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
             dict(type="navbar", custom_bindings=False),
             dict(type="settings", custom_bindings=False)
         ]	
+
    
 __plugin_name__ = "Safety Timeout"
 __plugin_version__ = "1.0.0"
