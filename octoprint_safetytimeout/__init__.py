@@ -10,7 +10,28 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-<<<<<<< HEAD
+	run =int(raw_input("Time:  "))
+        mins = int(run)
+        seconds = 0
+        # Loop until we reach time running
+        while mins != 0:
+        # print "Minutes", mins
+            while seconds != 0:
+                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+                sys.stdout.flush()
+                time.sleep(1)
+                seconds -= 1
+        #De-increment minutes 
+            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
+            sys.stdout.flush()
+            mins -= 1
+            seconds =59
+        while seconds != 0:
+            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+            sys.stdout.flush()
+            time.sleep(1)
+            seconds -= 1
+
     def get_state_id(self):
       	try: 
 		return self._printer.get_state_id()
@@ -37,35 +58,8 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 			return "OTHER"
 		return "UNKNOWN"
 
-
-   def get_settings_defaults(self):
-=======
-        run =int(raw_input("Time:  "))
-        mins = int(run)
-        seconds = 0
-        # Loop until we reach time running
-        while mins != 0:
-        # print "Minutes", mins
-            while seconds != 0:
-                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-                sys.stdout.flush()
-	        time.sleep(1)
-                seconds -= 1
-        #De-increment minutes 
-            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
-            sys.stdout.flush()
-            mins -= 1
-            seconds =59 
-        while seconds != 0:
-            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-            sys.stdout.flush()
-            time.sleep(1)
-            seconds -= 1
-        print("Will check to see if printer is printing")
-
  
     def get_settings_defaults(self):
->>>>>>> a0019befcd2bb6c8e47ff8b646a6231c00dcc77e
 	return dict(Time="0")
 
     def get_template_configs(self):
