@@ -10,6 +10,36 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
+<<<<<<< HEAD
+    def get_state_id(self):
+      	try: 
+		return self._printer.get_state_id()
+	except AttributeError:
+		state = self._printer._state
+		#see /octoprint/util/comm.py for state values
+		if state == None or state == 0:
+			return "OFFLINE"
+		if state == 4:
+			return "CONNECTING"
+		if state == 5:
+			return "OPERATIONAL"
+		if state == 6:
+			return "PRINTING"
+		if state == 7:
+			return "PAUSED"
+		if state == 8:
+			return "CLOSED"
+		if state == 9:
+			return "ERROR"
+		if state == 10:
+			return "CLOSED_WITH_ERROR"
+		if state in [1, 2, 3, 11]:
+			return "OTHER"
+		return "UNKNOWN"
+
+
+   def get_settings_defaults(self):
+=======
         run =int(raw_input("Time:  "))
         mins = int(run)
         seconds = 0
@@ -35,6 +65,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 
  
     def get_settings_defaults(self):
+>>>>>>> a0019befcd2bb6c8e47ff8b646a6231c00dcc77e
 	return dict(Time="0")
 
     def get_template_configs(self):
