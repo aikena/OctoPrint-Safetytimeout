@@ -18,14 +18,14 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
         # print "Minutes", mins
             while seconds != 0:
                 sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-                time.sleep(1)
-		sys.stdout.flush()
+                sys.stdout.flush()
+	        time.sleep(1)
                 seconds -= 1
         #De-increment minutes 
-        sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
-        sys.stdout.flush()
-        mins -= 1
-        seconds =59 
+            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
+            sys.stdout.flush()
+            mins -= 1
+            seconds =59 
         while seconds != 0:
             sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
             sys.stdout.flush()
