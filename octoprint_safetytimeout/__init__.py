@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 import time 
 import octoprint.plugin 
+import octoprint.printer 
 import sys
 import logging
 from octoprint.events import eventManager, Events
@@ -12,32 +13,6 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 			  octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.TemplatePlugin,
 			  octoprint.plugin.SettingsPlugin):
-
-    def get_state_id(self):
-      	try: 
-		return self._printer.get_state_id()
-	except AttributeError:
-		state = self._printer._state
-		#see /octoprint/util/comm.py for state values
-		if state == None or state == 0:
-			return "OFFLINE"
-		if state == 4:
-			return "CONNECTING"
-		if state == 5:
-			return "OPERATIONAL"
-		if state == 6:
-			return "PRINTING"
-		if state == 7:
-			return "PAUSED"
-		if state == 8:
-			return "CLOSED"
-		if state == 9:
-			return "ERROR"
-		if state == 10:
-			return "CLOSED_WITH_ERROR"
-		if state in [1, 2, 3, 11]:
-			return "OTHER"
-		return "UNKNOWN"
 	
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
@@ -66,7 +41,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
             time.sleep(1)
             seconds -= 1
         print("This is the state: ")
-        print self._printer.get_state_id()
+        print self._printer.is_printing()
 
  
     def get_settings_defaults(self):
