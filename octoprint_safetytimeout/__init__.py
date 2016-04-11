@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 import time 
 import octoprint.plugin 
+import octoprint.printer 
 import sys
 import logging
 from octoprint.events import eventManager, Events
@@ -12,6 +13,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 			  octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.TemplatePlugin,
 			  octoprint.plugin.SettingsPlugin):
+<<<<<<< HEAD
     def get_assets(self):
 	    return dict(
 			    js=["js/title_status.js"]
@@ -67,6 +69,8 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 		if state in [1, 2, 3, 11]:
 			return "OTHER"
 		return "UNKNOWN"
+=======
+>>>>>>> 52f132c79ddcc292a30a61943691821fc4ca972a
 	
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
@@ -95,9 +99,13 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
             time.sleep(1)
             seconds -= 1
         print("This is the state: ")
+<<<<<<< HEAD
         stateid = self.get_state_id()
 	print(stateid)
         #print self._printer.get_state_id()
+=======
+        print self._printer.is_printing()
+>>>>>>> 52f132c79ddcc292a30a61943691821fc4ca972a
 
  
     def get_settings_defaults(self):
