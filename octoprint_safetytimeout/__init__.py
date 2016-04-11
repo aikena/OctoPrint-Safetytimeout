@@ -4,33 +4,14 @@ from __future__ import absolute_import
 import time 
 import octoprint.plugin 
 import sys
-class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
+import logging
+from octoprint.events import eventManager, Events
+
+class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
+			  octoprint.plugin.EventHandlerPlugin,
+			  octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.TemplatePlugin,
 			  octoprint.plugin.SettingsPlugin):
-
-    def on_after_startup(self):
-        self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-	run =int(raw_input("Time:  "))
-        mins = int(run)
-        seconds = 0
-        # Loop until we reach time running
-        while mins != 0:
-        # print "Minutes", mins
-            while seconds != 0:
-                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-                sys.stdout.flush()
-                time.sleep(1)
-                seconds -= 1
-        #De-increment minutes 
-            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
-            sys.stdout.flush()
-            mins -= 1
-            seconds =59
-        while seconds != 0:
-            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-            sys.stdout.flush()
-            time.sleep(1)
-            seconds -= 1
 
     def get_state_id(self):
       	try: 
@@ -57,6 +38,35 @@ class SafetyTimeoutPlugin(octoprint.plugin.StartupPlugin,
 		if state in [1, 2, 3, 11]:
 			return "OTHER"
 		return "UNKNOWN"
+	
+    def on_after_startup(self):
+        self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
+        self.timer()
+
+    def timer(self):
+        run =int(raw_input("Time:  "))
+        mins = int(run)
+        seconds = 0
+        # Loop until we reach time running
+        while mins != 0:
+        # print "Minutes", mins
+            while seconds != 0:
+                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+                sys.stdout.flush()
+                time.sleep(1)
+                seconds -= 1
+        #De-increment minutes 
+            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
+            sys.stdout.flush()
+            mins -= 1
+            seconds =59
+        while seconds != 0:
+            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+            sys.stdout.flush()
+            time.sleep(1)
+            seconds -= 1
+        print("This is the state: ")
+        print self._printer.get_state_id()
 
  
     def get_settings_defaults(self):
