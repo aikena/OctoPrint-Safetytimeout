@@ -12,6 +12,35 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 			  octoprint.plugin.StartupPlugin,
 			  octoprint.plugin.TemplatePlugin,
 			  octoprint.plugin.SettingsPlugin):
+    def get_assets(self):
+	    return dict(
+			    js=["js/title_status.js"]
+			)	
+
+    def on_event(self, event, payload):
+	    if event == Events.CLIENT_OPENED:
+		    self._plugin_manager.send_plugin_message(self._identifier, self.get_state_id())
+
+    def get_version(self):
+	    return self._plugin_version
+
+    def get_update_information(self):
+       	    return dict(
+		    title_status=dict(
+			    displayName="Title Status",
+			    displayVersion=self._plugin_version,
+
+			    # version check: github repository
+			    type="github_release",
+			    user="MoonshineSG",
+			    repo="OctoPrint-TitleStatus",
+			    current=self._plugin_version,
+
+			    # update method: pip
+			    pip="https://github.com/MoonshineSG/OctoPrint-TitleStatus/archive/{target_version}.zip"
+		    )
+	    )
+
 
     def get_state_id(self):
       	try: 
@@ -66,7 +95,9 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
             time.sleep(1)
             seconds -= 1
         print("This is the state: ")
-        print self._printer.get_state_id()
+        stateid = self.get_state_id()
+	print(stateid)
+        #print self._printer.get_state_id()
 
  
     def get_settings_defaults(self):
