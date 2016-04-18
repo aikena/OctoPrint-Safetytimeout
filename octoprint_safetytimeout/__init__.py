@@ -16,34 +16,21 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 	
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
-        self.timer()
+        self.countdown()
 
-    def timer(self):
-        run =self._settings.get(["Time"])
-        mins = int(run)
-        seconds = 0
-        # Loop until we reach time running
-        while mins != 0:
-        # print "Minutes", mins
-            while seconds != 0:
-                sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
-                sys.stdout.flush()
-                time.sleep(1)
-                seconds -= 1
-        #De-increment minutes 
-            sys.stdout.write("\r" + str(mins) + ":" + str(seconds))
-            sys.stdout.flush()
-            mins -= 1
-            seconds =59
-        while seconds != 0:
-            sys.stdout.write("\r" + str(mins) + ":" +str(seconds))
+    def countdown(self):
+	t = self._settings.get(["Time"]) 
+	t = int(t) 
+	t = t*60
+        while t >= 0:
+	    mins, secs = divmod(t, 60)
+            timeformat = '{:02d}:{:02d}'.format(mins, secs)
+            sys.stdout.write("\r" + timeformat)
             sys.stdout.flush()
             time.sleep(1)
-            seconds -= 1
-        print("This is the state: ")
-        print self._printer.is_printing()
-	self.shutdown()
-
+            t -= 1
+        print('Goodbye!\n\n\n\n\n')
+  
     def shutdown(self):
 	if self._printer.is_printing():
 	    #self.timer()
