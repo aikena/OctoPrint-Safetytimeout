@@ -17,10 +17,27 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
     def on_after_startup(self):
         self._logger.info("Safety Timeout! (more: %s)" % self._settings.get(["Time"]))
 
-        self.countdown()
+        #self.countdown()
 	temperatures = self._printer.get_current_temperatures()
+<<<<<<< HEAD
         self._logger.info("The Temperature is: %s" % temperatures)
         self._logger.info("this is stuff: %s" % temperatures.keys())
+=======
+        '''if float(temperatures.get("bed").get("target")) > 0:
+            self._logger.info("The Temperature is: %s" % temperatures)
+        else:
+            self._logger.info("something something something: %s" % temperatures)
+	self._logger.info("this is stuff: %s" % temperatures.keys())'''
+	while temperatures == {}: 
+	    temperatures = self._printer.get_current_temperatures()
+            print temperatures 
+	while float(temperatures.get("bed").get("target")) == 0 and float(temperatures.get("tool0").get("target")) == 0:  
+	    print("you are in the second loop")
+	    temperatures = self._printer.get_current_temperatures()
+	    pass
+	print("yay! you did it") 
+	self.countdown()  
+>>>>>>> 6bfe3bda938265e0b91c4d96e94957860d5bf5aa
 
     def countdown(self):
 	# t comes in as a string from the get.
