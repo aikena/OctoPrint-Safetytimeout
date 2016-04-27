@@ -22,7 +22,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
           self.makeTimer()
 	  return
 #      print("Conditions not met")
-    else:
+#    else:
 #      print("Conditions not met") 	 
   
   def makeTimer (self):
@@ -46,7 +46,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
   def shutdown(self):
     #check to see if the printer is printing 
     if self._printer.is_printing():
-      print("The printer is printing!")
+#      print("The printer is printing!")
       self.initialstart = True
 #      print("self.countdown has been cancelled")
     #if the printer is printing we do not want to interupt it 
