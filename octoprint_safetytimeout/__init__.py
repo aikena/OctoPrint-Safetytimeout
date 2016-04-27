@@ -61,7 +61,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 
   def get_settings_defaults(self):
     #set the default time
-    return dict(Time="0")
+    return dict(Time="10")
 
   def get_template_configs(self):
     return [
