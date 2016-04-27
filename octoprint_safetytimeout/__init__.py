@@ -17,7 +17,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
   def condition(self):
     if self.initialstart == True:
       temperatures = self._printer.get_current_temperatures()
-      if int(self._settings.get(["Time"])) > 0 and self._printer.get_current_temperatures() != {}:
+      if int(self._settings.get(["Time"])) > 0 and temperatures != {}:
         if float(temperatures.get("bed").get("target")) != 0 or float(temperatures.get("tool0").get("target")) != 0:
           self.makeTimer()
 	  return
@@ -26,7 +26,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 #      print("Conditions not met") 	 
   
   def makeTimer (self):
-    self.initial = float(self._settings.get(["Time"]))
+    self.initial = int(self._settings.get(["Time"]))
     self._logger.info("The Timer Has Been Initiated!")
     seconds = self.initial * 60
 #    print("There are %s seconds left" % seconds)
