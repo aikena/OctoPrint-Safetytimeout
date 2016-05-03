@@ -42,8 +42,20 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
     self.timer.start()
     # get the temperatures of the tools
  
+  def on_settings_save(self, data):
+    old_time = self._settings.get(["Time"])
+
+    octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
+
+    new_time = self._settings.get(["Time"])
+    if old_time != new_time:
+      self.countdown.cancel()
+      seconds = int(new_time) * 60
+      self.countdown = RepeatedTimer(seconds, self.shutdown, run_first = False)
+
 
   def shutdown(self):
+    self.countdown.cancel()
     #check to see if the printer is printing 
     if self._printer.is_printing():
 #      print("The printer is printing!")
