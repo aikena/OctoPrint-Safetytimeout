@@ -26,6 +26,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 #      print("Conditions not met") 	 
   
   def makeTimer (self):
+    self.countdowndefined = True
     self.initial = int(self._settings.get(["Time"]))
     self._logger.info("The Timer Has Been Initiated!")
     seconds = self.initial * 60
@@ -35,6 +36,7 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
     self.countdown.start()
 
   def on_after_startup(self):
+    self.countdowndefined = False
     self.initialstart = True
     self.initial = int(self._settings.get(["Time"]))
 
@@ -49,10 +51,15 @@ class SafetyTimeoutPlugin(octoprint.plugin.AssetPlugin,
 
     new_time = self._settings.get(["Time"])
     if old_time != new_time:
-      self.countdown.cancel()
-      seconds = int(new_time) * 60
-      self.countdown = RepeatedTimer(seconds, self.shutdown, run_first = False)
-
+      if self.countdowndefined == True:
+        self.countdown.cancel()
+     #   print("Old timer cancelled")
+        seconds = int(new_time) * 60
+     #   print("New timer initiated")
+     #   print(seconds)
+     # self.countdown = RepeatedTimer(seconds, self.shutdown, run_first = False)
+     # self.countdown.start()
+        self.initialstart = True
 
   def shutdown(self):
     self.countdown.cancel()
