@@ -21,13 +21,13 @@ plugin_version = "1.0"
 plugin_description = """After a specified amount of time, it will turn off the temperature to the hotend and bed"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Kristian Toole, Ashley Aiken, Dawn Manning, Denzell Barnett"
+plugin_author = "Kristian Toole, Ashley Aiken, Dawn Manning, Christopher Hunt"
 
 # The plugin's author's mail address.
 plugin_author_email = "kristiantoole20@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/kristiantoole/OctoPrint-Safetytimeout"
+plugin_url = "https://github.com/aikena/OctoPrint-Safetytimeout"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
